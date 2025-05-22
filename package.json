@@ -1,0 +1,22 @@
+{
+  "name": "bun-serve-route-plus",
+  "description": "Middleware & route group system for Bun's HTTP server",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "type": "module",
+  "author": "liuyt2103",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": ["bun", "middleware", "http", "serve", "route", "group"],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
