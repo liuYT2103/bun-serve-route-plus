@@ -92,7 +92,7 @@ beforeRespose.use((res) => {
 ### Route Grouping
 
 ```typescript
-const apiRoutes = g('api', {
+g('api', {
   '/users': {
     GET: getUsers,
     POST: createUser
@@ -105,24 +105,6 @@ const apiRoutes = g('api', {
 // Results in:
 // - /api/users
 // - /api/products
-```
-
-### Combined Usage
-
-```typescript
-const routes = m(
-  {
-    '/health': () => new Response('OK')
-  },
-  g('v1', {
-    '/data': {
-      GET: fetchData,
-      POST: uploadData
-    }
-  })
-);
-
-Bun.serve({ fetch: routes });
 ```
 
 ## License
@@ -139,11 +121,3 @@ Key features of this README:
 5. Visual badges for professionalism
 6. Organized sections for easy navigation
 7. Code blocks with proper syntax highlighting
-
-You may want to:
-- Add a "Contributing" section if open-source
-- Include a "Changelog" link
-- Add more complex examples if needed
-- Include performance benchmarks if available
-
-The README presents your package as a professional, production-ready solution while keeping the documentation clean and approachable.
