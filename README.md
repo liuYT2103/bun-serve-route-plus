@@ -1,15 +1,323 @@
-# bun-serve-route-plus
+Here's a professional README.md for your package:
 
-To install dependencies:
+```markdown
+# Bun Serve Route Plus
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+Enhanced middleware and route grouping for Bun's native HTTP server routes configuration.
+
+## Features
+
+- 🛠 **Middleware Support**: Add before-request and after-response middleware
+- 🗂 **Route Grouping**: Organize routes with common prefixes
+- ⚡ **Lightweight**: Zero dependencies, built for Bun's native server
+- 🦄 **TypeScript Ready**: Full type definitions included
+- ✨ **Clean API**: Simple and intuitive syntax
+
+## Installation
 
 ```bash
-bun install
+bun add bun-serve-route-plus
 ```
 
-To run:
+## Usage
+
+### Basic Setup
+
+```typescript
+import { m, g, beforeRequest, beforeRespose } from 'bun-serve-route-plus';
+
+// Create your Bun server with enhanced routes
+Bun.serve({
+  port: 3000,
+  fetch: m({
+    '/': {
+      GET: () => new Response('Hello World!')
+    },
+    ...g('api', {
+      '/user': {
+        GET: () => new Response('User data')
+      }
+    })
+  })
+});
+```
+
+### Middleware Examples
+
+**Request Middleware:**
+```typescript
+beforeRequest.use((req) => {
+  console.log(`Incoming request: ${req.url}`);
+  // Return a Response to short-circuit the request
+});
+
+beforeRequest.use(async (req) => {
+  const auth = req.headers.get('Authorization');
+  if (!auth) return new Response('Unauthorized', { status: 401 });
+});
+```
+
+**Response Middleware:**
+```typescript
+beforeRespose.use((res) => {
+  res.headers.set('X-Powered-By', 'Bun');
+  return res;
+});
+```
+
+### Route Grouping
+
+```typescript
+const apiRoutes = g('api', {
+  '/users': {
+    GET: getUsers,
+    POST: createUser
+  },
+  '/products': {
+    GET: getProducts
+  }
+});
+
+// Results in:
+// - /api/users
+// - /api/products
+```
+
+### Combined Usage
+
+```typescript
+const routes = m(
+  {
+    '/health': () => new Response('OK')
+  },
+  g('v1', {
+    '/data': {
+      GET: fetchData,
+      POST: uploadData
+    }
+  })
+);
+
+Bun.serve({ fetch: routes });
+```
+
+## API Reference
+
+### Core Functions
+
+| Function | Description | Example |
+|----------|-------------|---------|
+| `m()` | Apply middleware to routes | `m({ '/': { GET: handler } })` |
+| `g()` | Group routes with prefix | `g('api', routes)` |
+
+### Middleware Classes
+
+| Class | Description | Methods |
+|-------|-------------|---------|
+| `BeforeRequest` | Request middleware handler | `.use(fn)`, `.execute()` |
+| `BeforeResponse` | Response middleware handler | `.use(fn)`, `.execute()` |
+
+### Global Instances
+
+| Instance | Description |
+|----------|-------------|
+| `beforeRequest` | Global request middleware instance |
+| `beforeRespose` | Global response middleware instance |
+
+## Type Definitions
+
+Full TypeScript support with these core types:
+
+```typescript
+type HTTPMethodHandler = (request: Request, env?: any, ctx?: any) => Promise<Response> | Response;
+
+type HTTPMethod = {
+  GET?: HTTPMethodHandler;
+  POST?: HTTPMethodHandler;
+  OPTIONS?: HTTPMethodHandler;
+  HEAD?: HTTPMethodHandler;
+  DELETE?: HTTPMethodHandler;
+  PATCH?: HTTPMethodHandler;
+  PUT?: HTTPMethodHandler;
+} | HTTPMethodHandler;
+
+type BunRoutes = {
+  [path: string]: HTTPMethod;
+};
+```
+
+## License
+
+MIT © [Your Name]
+```
+
+Key features of this README:
+
+1. Clear installation instructions
+2. Practical usage examples
+3. Complete API documentation
+4. TypeScript support highlighted
+5. Visual badges for professionalism
+6. Organized sections for easy navigation
+7. Code blocks with proper syntax highlighting
+
+You may want to:
+- Add a "Contributing" section if open-source
+- Include a "Changelog" link
+- Add more complex examples if needed
+- Include performance benchmarks if available
+
+The README presents your package as a professional, production-ready solution while keeping the documentation clean and approachable.Here's a professional README.md for your package:
+
+```markdown
+# Bun Serve Route Plus
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+Enhanced middleware and route grouping for Bun's native HTTP server routes configuration.
+
+## Features
+
+- 🛠 **Middleware Support**: Add before-request and after-response middleware
+- 🗂 **Route Grouping**: Organize routes with common prefixes
+- ⚡ **Lightweight**: Zero dependencies, built for Bun's native server
+- 🦄 **TypeScript Ready**: Full type definitions included
+- ✨ **Clean API**: Simple and intuitive syntax
+
+## Installation
 
 ```bash
-bun run index.ts
+bun add bun-serve-route-plus
 ```
 
-This project was created using `bun init` in bun v1.2.13. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## Usage
+
+```typescript
+import { serve } from 'bun';
+import { cors } from './middleware/cors';
+import { authMiddleware } from './middleware/auth';
+import { useMiddleware, useGroup, beforeRequest } from './class/middleware';
+
+import UserApi from './router/user';
+
+cors()
+beforeRequest.use(authMiddleware)
+
+const app = serve({
+  port:12580,
+  fetch: () => new Response('好像来错地方了'),
+  routes: useMiddleware(
+    {
+      '/api/abc': () => new Response('Hello, /api/abc')
+    },
+    useGroup('api/v1',
+      useGroup('user', UserApi),
+      useGroup('goods', {
+        '/vip': () => new Response('Hello, /api/v1/goods/vip')
+      })
+    )
+  )
+})
+console.log(
+  `🐇 Server Is Running At \n\n ${app.url.href}`
+)
+```
+
+```typescript
+// middleware/cors.ts
+import { CORS_HEADERS } from "../config";
+import { beforeRequest, beforeRespose } from "../class/middleware";
+export const cors = (option = CORS_HEADERS) => {
+  beforeRequest.use((request) => {
+    if(request.method == 'OPTIONS') return new Response('Departed', option);
+  })
+  beforeRespose.use((response) => {
+    if(!response.headers) return response
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST');
+    return response
+  })
+}
+```
+
+**Request Middleware:**
+```typescript
+beforeRequest.use((req) => {
+  console.log(`Incoming request: ${req.url}`);
+  // Return a Response to short-circuit the request
+});
+
+beforeRequest.use(async (req) => {
+  const auth = req.headers.get('Authorization');
+  if (!auth) return new Response('Unauthorized', { status: 401 });
+});
+```
+
+**Response Middleware:**
+```typescript
+beforeRespose.use((res) => {
+  res.headers.set('X-Powered-By', 'Bun');
+  return res;
+});
+```
+
+### Route Grouping
+
+```typescript
+const apiRoutes = g('api', {
+  '/users': {
+    GET: getUsers,
+    POST: createUser
+  },
+  '/products': {
+    GET: getProducts
+  }
+});
+
+// Results in:
+// - /api/users
+// - /api/products
+```
+
+### Combined Usage
+
+```typescript
+const routes = m(
+  {
+    '/health': () => new Response('OK')
+  },
+  g('v1', {
+    '/data': {
+      GET: fetchData,
+      POST: uploadData
+    }
+  })
+);
+
+Bun.serve({ fetch: routes });
+```
+
+## License
+
+MIT © [LiuYT2103]
+```
+
+Key features of this README:
+
+1. Clear installation instructions
+2. Practical usage examples
+3. Complete API documentation
+4. TypeScript support highlighted
+5. Visual badges for professionalism
+6. Organized sections for easy navigation
+7. Code blocks with proper syntax highlighting
+
+You may want to:
+- Add a "Contributing" section if open-source
+- Include a "Changelog" link
+- Add more complex examples if needed
+- Include performance benchmarks if available
+
+The README presents your package as a professional, production-ready solution while keeping the documentation clean and approachable.
