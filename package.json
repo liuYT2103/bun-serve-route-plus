@@ -1,7 +1,7 @@
 {
   "name": "bun-serve-route-plus",
   "description": "Middleware & route group system for Bun's HTTP server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "module": "index.ts",
   "type": "module",
   "author": "liuyt2103",
