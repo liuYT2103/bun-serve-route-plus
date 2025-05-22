@@ -5,8 +5,8 @@
   "module": "index.ts",
   "type": "module",
   "author": "liuyt2103",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "keywords": ["bun", "middleware", "http", "serve", "route", "group"],
   "license": "MIT",
   "scripts": {

@@ -198,7 +198,7 @@ bun add bun-serve-route-plus
 import { serve } from 'bun';
 import { cors } from './middleware/cors';
 import { authMiddleware } from './middleware/auth';
-import { useMiddleware, useGroup, beforeRequest } from './class/middleware';
+import { useMiddleware, useGroup, beforeRequest } from 'bun-serve-route-plus';
 
 import UserApi from './router/user';
 
