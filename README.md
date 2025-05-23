@@ -23,7 +23,7 @@ bun add bun-serve-route-plus
 ```typescript
 // mini
 import { serve } from 'bun';
-import { useMiddleware, useGroup, beforeRequest } from 'bun-serve-route-plus';
+mimport { m, useGroup, beforeRequest } from 'bun-serve-route-plus';
 serve({
   port:12580,
   fetch: () => new Response('好像来错地方了'),
