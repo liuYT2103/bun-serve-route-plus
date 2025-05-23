@@ -21,6 +21,22 @@ bun add bun-serve-route-plus
 ## Usage
 
 ```typescript
+// mini
+import { serve } from 'bun';
+import { useMiddleware, useGroup, beforeRequest } from 'bun-serve-route-plus';
+serve({
+  port:12580,
+  fetch: () => new Response('好像来错地方了'),
+  routes: m(
+    {
+      '/api/abc': () => new Response('Hello, /api/abc'),
+      '/vip': () => new Response('Hello, /vip')
+    })
+})
+```
+
+```typescript
+// normal
 import { serve } from 'bun';
 import { cors } from './middleware/cors';
 import { authMiddleware } from './middleware/auth';
