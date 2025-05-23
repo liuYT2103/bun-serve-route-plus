@@ -93,13 +93,3 @@ beforeRespose.use((res) => {
 
 MIT © [LiuYT2103]
 ```
-
-Key features of this README:
-
-1. Clear installation instructions
-2. Practical usage examples
-3. Complete API documentation
-4. TypeScript support highlighted
-5. Visual badges for professionalism
-6. Organized sections for easy navigation
-7. Code blocks with proper syntax highlighting
