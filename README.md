@@ -89,24 +89,6 @@ beforeRespose.use((res) => {
 });
 ```
 
-### Route Grouping
-
-```typescript
-g('api', {
-  '/users': {
-    GET: getUsers,
-    POST: createUser
-  },
-  '/products': {
-    GET: getProducts
-  }
-});
-
-// Results in:
-// - /api/users
-// - /api/products
-```
-
 ## License
 
 MIT © [LiuYT2103]
