@@ -54,7 +54,7 @@ export const useMiddleware = (...args:BunRoutes[]):BunRoutes => {
       return requestMiddlewareResponse;
     }
     const response = await func(request, env, ctx);
-    return await beforeRespose.execute(response)
+    return await beforeResponse.execute(response)
   }
   const handleMethods = (methods: HTTPMethod):HTTPMethod => 
     typeof methods == 'function' ? 

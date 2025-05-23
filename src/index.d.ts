@@ -94,7 +94,7 @@ declare const beforeRequest: BeforeRequest;
 /**
  * Global response middleware instance
  */
-declare const beforeRespose: BeforeResponse;
+declare const beforeResponse: BeforeResponse;
 
 /**
  * Alias for useMiddleware
@@ -117,7 +117,7 @@ export {
   useMiddleware,
   useGroup,
   beforeRequest,
-  beforeRespose,
+  beforeResponse,
   m,
   g
 };

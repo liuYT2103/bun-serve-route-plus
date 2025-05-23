@@ -76,7 +76,7 @@ export const cors = (option = CORS_HEADERS) => {
   beforeRequest.use((request) => {
     if(request.method == 'OPTIONS') return new Response('Departed', option);
   })
-  beforeRespose.use((response) => {
+  beforeResponse.use((response) => {
     if(!response.headers) return response
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST');
