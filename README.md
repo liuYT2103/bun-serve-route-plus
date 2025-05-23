@@ -71,7 +71,7 @@ console.log(
 ```typescript
 // middleware/cors.ts
 import { CORS_HEADERS } from "../config";
-import { beforeRequest, beforeRespose } from "../class/middleware";
+import { beforeRequest, beforeResponse } from "../class/middleware";
 export const cors = (option = CORS_HEADERS) => {
   beforeRequest.use((request) => {
     if(request.method == 'OPTIONS') return new Response('Departed', option);
@@ -100,7 +100,7 @@ beforeRequest.use(async (req) => {
 
 **Response Middleware:**
 ```typescript
-beforeRespose.use((res) => {
+beforeResponse.use((res) => {
   res.headers.set('X-Powered-By', 'Bun');
   return res;
 });
