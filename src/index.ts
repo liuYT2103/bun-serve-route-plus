@@ -78,6 +78,6 @@ export const useGroup = (prefix:string = '', ...args: BunRoutes[] ) => {
   )
 }
 export const beforeRequest =  new BeforeRequest()
-export const beforeRespose =  new BeforeResponse()
+export const beforeResponse =  new BeforeResponse()
 export const m = useMiddleware
 export const g = useGroup
