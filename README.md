@@ -23,7 +23,9 @@ bun add bun-serve-route-plus
 ```typescript
 // mini
 import { serve } from 'bun';
+import { authMiddleware } from './middleware/auth';
 import { m, beforeRequest } from 'bun-serve-route-plus';
+beforeRequest.use(authMiddleware)
 serve({
   port:12580,
   fetch: () => new Response('好像来错地方了'),
